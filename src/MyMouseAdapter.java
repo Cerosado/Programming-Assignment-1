@@ -108,7 +108,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						if(myPanel.minesArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]) { //Hit mine
 							myPanel.lostGame();
 							if (myPanel.mouseDownGridX == gridX|| myPanel.mouseDownGridY == gridY)
-								myFrame.dispose();
+								myFrame.dispose(); //Close frame when user clicks a mine
 							break;
 						}	
 						myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.GRAY;
