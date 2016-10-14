@@ -60,8 +60,7 @@ public class MyPanel extends JPanel {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(x1, y1, width + 1, height + 1);
 
-		//Draw the grid minus the bottom row (which has only one cell)
-		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
+		//By default, the grid will be 9x9 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
 		g.setColor(Color.BLACK);
 		for (int y = 0; y <= TOTAL_ROWS; y++) {
 			g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)));
@@ -84,7 +83,7 @@ public class MyPanel extends JPanel {
 
 	//Method that sets mines in 10 random squares
 	public void setMines() {
-		//Initialization of arrays
+		//Initialization of array
 		for (int i = 0; i < TOTAL_COLUMNS; i++) {
 			for (int k = 0; k < TOTAL_ROWS; k++) {
 				minesArray[i][k] = false; 
@@ -96,10 +95,12 @@ public class MyPanel extends JPanel {
 		while(setMines < TOTAL_MINES) {
 			xBombCoordinate = generator.nextInt(TOTAL_COLUMNS);
 			yBombCoordinate = generator.nextInt(TOTAL_ROWS);
+			if(xBombCoordinate != firstXCoordinate && yBombCoordinate != firstYCoordinate) {
 			if(!minesArray[xBombCoordinate][yBombCoordinate]) {
 				setMines++;
 				minesArray[xBombCoordinate][yBombCoordinate] = true;
-				numberOfMines[xBombCoordinate][yBombCoordinate] = -1; //-1 indicates that there is a bomb in that cell
+				numberOfMines[xBombCoordinate][yBombCoordinate] = -1; //-1 indicates that there is a mine in that cell
+				}
 			}
 		}
 		nearMines();
@@ -195,7 +196,7 @@ public class MyPanel extends JPanel {
 			if(numberOfMines[xCoordinate + m][yCoordinate] == 0 && colorArray[xCoordinate + m][yCoordinate] != Color.RED) { //Moving to the right
 				colorArray[xCoordinate + m][yCoordinate] = Color.GRAY;
 			} else {
-				if(m > 1 && numberOfMines[xCoordinate + m][yCoordinate]>0) {
+				if(m > 1 && numberOfMines[xCoordinate + m][yCoordinate] > 0 && colorArray[xCoordinate + m][yCoordinate] != Color.RED) {
 					colorArray[xCoordinate + m][yCoordinate] = Color.GRAY; 
 				}
 				break;
@@ -208,7 +209,7 @@ public class MyPanel extends JPanel {
 			if(numberOfMines[xCoordinate - m][yCoordinate] == 0 && colorArray[xCoordinate - m][yCoordinate] != Color.RED) { //Moving to the left
 				colorArray[xCoordinate - m][yCoordinate] = Color.GRAY;
 			} else {
-				if(m > 1 && numberOfMines[xCoordinate - m][yCoordinate]>0) {
+				if(m > 1 && numberOfMines[xCoordinate - m][yCoordinate] > 0 && colorArray[xCoordinate - m][yCoordinate] != Color.RED) {
 					colorArray[xCoordinate - m][yCoordinate] = Color.GRAY; 
 				}
 				break;
@@ -221,7 +222,7 @@ public class MyPanel extends JPanel {
 			if(numberOfMines[xCoordinate][yCoordinate + k] == 0 && colorArray[xCoordinate][yCoordinate + k] != Color.RED) { //Moving down
 				colorArray[xCoordinate][yCoordinate + k] = Color.GRAY;
 			} else {
-				if(k > 1 && numberOfMines[xCoordinate][yCoordinate + k]>0) {
+				if(k > 1 && numberOfMines[xCoordinate][yCoordinate + k] > 0 && colorArray[xCoordinate][yCoordinate + k] != Color.RED) {
 					colorArray[xCoordinate][yCoordinate + k] = Color.GRAY; 
 				}
 				break;
@@ -234,7 +235,7 @@ public class MyPanel extends JPanel {
 			if(numberOfMines[xCoordinate][yCoordinate - k] == 0 && colorArray[xCoordinate][yCoordinate - k] != Color.RED) { //Moving up
 				colorArray[xCoordinate][yCoordinate - k] = Color.GRAY;
 			} else {
-				if(k > 1 && numberOfMines[xCoordinate][yCoordinate - k]>0) {
+				if(k > 1 && numberOfMines[xCoordinate][yCoordinate - k] > 0 && colorArray[xCoordinate][yCoordinate - k] != Color.RED) {
 					colorArray[xCoordinate][yCoordinate - k] = Color.GRAY;
 				}
 				break;
@@ -250,7 +251,7 @@ public class MyPanel extends JPanel {
 				if(numberOfMines[xCoordinate-k][yCoordinate - k] == 0 && colorArray[xCoordinate - k][yCoordinate - k] != Color.RED) { 
 					colorArray[xCoordinate-k][yCoordinate - k] = Color.GRAY;
 				} else {
-					if(k > 1 && numberOfMines[xCoordinate-k][yCoordinate - k]>0) {
+					if(k > 1 && numberOfMines[xCoordinate-k][yCoordinate - k] > 0 && colorArray[xCoordinate - k][yCoordinate - k] != Color.RED) {
 						colorArray[xCoordinate-k][yCoordinate - k] = Color.GRAY; 
 					}
 					break;
@@ -265,7 +266,7 @@ public class MyPanel extends JPanel {
 				if(numberOfMines[xCoordinate+k][yCoordinate - k] == 0 && colorArray[xCoordinate + k][yCoordinate - k] != Color.RED) { 
 					colorArray[xCoordinate+k][yCoordinate - k] = Color.GRAY;
 				} else {
-					if(k > 1 && numberOfMines[xCoordinate+k][yCoordinate - k]>0) {
+					if(k > 1 && numberOfMines[xCoordinate+k][yCoordinate - k]>0 && colorArray[xCoordinate + k][yCoordinate - k] != Color.RED) {
 						colorArray[xCoordinate+k][yCoordinate - k] = Color.GRAY; 
 					}
 					break;
@@ -280,7 +281,7 @@ public class MyPanel extends JPanel {
 				if(numberOfMines[xCoordinate+k][yCoordinate + k] == 0 && colorArray[xCoordinate + k][yCoordinate + k] != Color.RED) { 
 					colorArray[xCoordinate+k][yCoordinate + k] = Color.GRAY;
 				} else {
-					if(k > 1 && numberOfMines[xCoordinate+k][yCoordinate + k]>0) {
+					if(k > 1 && numberOfMines[xCoordinate+k][yCoordinate + k]>0 && colorArray[xCoordinate + k][yCoordinate + k] != Color.RED) {
 						colorArray[xCoordinate+k][yCoordinate + k] = Color.GRAY; 
 					}
 					break;
@@ -295,7 +296,7 @@ public class MyPanel extends JPanel {
 				if(numberOfMines[xCoordinate-k][yCoordinate + k] == 0 && colorArray[xCoordinate - k][yCoordinate + k] != Color.RED) { 
 					colorArray[xCoordinate-k][yCoordinate + k] = Color.GRAY;
 				} else {
-					if(k > 1 && numberOfMines[xCoordinate-k][yCoordinate + k] > 0) {
+					if(k > 1 && numberOfMines[xCoordinate-k][yCoordinate + k] > 0 && colorArray[xCoordinate - k][yCoordinate + k] != Color.RED) {
 						colorArray[xCoordinate-k][yCoordinate + k] = Color.GRAY; 
 					}
 					break;

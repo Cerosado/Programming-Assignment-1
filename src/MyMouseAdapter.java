@@ -94,7 +94,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					} else {
-						if (!myPanel.gameStart){
+						if (!myPanel.gameStart) {
 							myPanel.firstClick(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.setMines();
 						}
