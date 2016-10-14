@@ -9,7 +9,6 @@ public class Main {
 
 		MyPanel myPanel = new MyPanel();
 		myFrame.add(myPanel);
-		myPanel.setMines();
 		
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
 		myFrame.addMouseListener(myMouseAdapter);
